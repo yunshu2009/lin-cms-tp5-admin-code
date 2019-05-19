@@ -23,22 +23,6 @@ class LinLog extends Model
      */
     public static function getLogs($params)
     {
-//        $userOption = [];
-//        if (isset($params['user_name'])) {
-//            $userOption = ['user_name' => $params['user_name']];
-//        }
-
-//        if (isset($params['start']) && isset($params['end'])) {
-//            $dateOption = [
-//                $params['start'],
-//                $params['start']
-//            ];
-//        }
-
-//        $userList = self::whereBetweenTime('time', isset($params['start']) ? $params['start'] : null,
-//            isset($params['end']) ? $params['end'] : null)
-//            ->where($userOption)
-//            ->paginate($params['count'], false, ['page' => $params['page']]);
         $filter = [];
         if (isset($params['name'])) {
             $filter ['user_name'] = $params['name'];
@@ -49,6 +33,7 @@ class LinLog extends Model
         }
 
         $userList = self::withSearch(['user_name', 'time'], $filter)
+            ->order('time desc')
             ->paginate($params['count'], false, ['page' => $params['page']]);
 
         $result = [
