@@ -58,20 +58,26 @@ class LinUser extends Model
         $group = [];
         if (array_key_exists('group_id', $params)) $group = ['group_id' => $params['group_id']];
 
+        list($start, $count) = paginate();
+
         $userList = self::where('admin', '<>', 2)
             ->where($group)
-            ->field('password,delete_time,update_time', true)
-            ->paginate($params['count'], false, ['page' => $params['page']])
-            ->each(function ($item, $key) {
-                $group = LinGroup::get($item['group_id']);
-                $item['group_name'] = $group['name'];
-                return $item;
-            });
+            ->field('password,delete_time,update_time', true);
+
+        $totalNums = $userList->count();
+        $userList = $userList->limit($start, $count)->select();
+
+        array_map(function ($item) {
+            $group = LinGroup::get($item['group_id']);
+            $item['group_name'] = $group['name'];
+            return $item;
+        }, $userList->toArray());
 
         $result = [
-            'collection' => $userList->items(),
-            'total_nums' => $userList->total()
+            'collection' => $userList,
+            'total_nums' => $totalNums
         ];
+
         return $result;
     }
 

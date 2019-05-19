@@ -20,9 +20,10 @@ class LinLog extends Model
     /**
      * @param $params
      * @return array
-     * @throws \LinCmsTp5\admin\exception\ParameterException
-     * @throws \think\exception\DbException
      * @throws LoggerException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public static function getLogs($params)
     {
@@ -36,6 +37,7 @@ class LinLog extends Model
         }
 
         list($start, $count) = paginate();
+
         $logs = self::withSearch(['user_name', 'time'], $filter)
             ->order('time desc');
 
