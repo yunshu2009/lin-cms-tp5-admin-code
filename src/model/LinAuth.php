@@ -31,7 +31,6 @@ class LinAuth extends Model
 
     /**
      * @param $params
-     * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
