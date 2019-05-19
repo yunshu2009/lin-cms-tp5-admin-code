@@ -8,6 +8,7 @@
 
 namespace LinCmsTp5\admin\model;
 
+use LinCmsTp5\admin\exception\logger\LoggerException;
 use think\Model;
 
 class LinLog extends Model
@@ -19,7 +20,9 @@ class LinLog extends Model
     /**
      * @param $params
      * @return array
+     * @throws \LinCmsTp5\admin\exception\ParameterException
      * @throws \think\exception\DbException
+     * @throws LoggerException
      */
     public static function getLogs($params)
     {
@@ -32,13 +35,18 @@ class LinLog extends Model
             $filter['time'] = [$params['start'], $params['end']];
         }
 
-        $userList = self::withSearch(['user_name', 'time'], $filter)
-            ->order('time desc')
-            ->paginate($params['count'], false, ['page' => $params['page']]);
+        list($start, $count) = paginate();
+        $logs = self::withSearch(['user_name', 'time'], $filter)
+            ->order('time desc');
+
+        $totalNums = $logs->count();
+        $logs = $logs->limit($start, $count)->select();
+
+        if (!count($logs)) throw new LoggerException(['code' => 404, 'msg' => '没有查询到更多日志']);
 
         $result = [
-            'collection' => $userList->items(),
-            'total_nums' => $userList->total()
+            'collection' => $logs,
+            'total_nums' => $totalNums
         ];
         return $result;
 
