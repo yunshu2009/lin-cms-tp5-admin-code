@@ -67,7 +67,7 @@ class LinUser extends Model
         $totalNums = $userList->count();
         $userList = $userList->limit($start, $count)->select();
 
-        array_map(function ($item) {
+        $userList = array_map(function ($item) {
             $group = LinGroup::get($item['group_id']);
             $item['group_name'] = $group['name'];
             return $item;
