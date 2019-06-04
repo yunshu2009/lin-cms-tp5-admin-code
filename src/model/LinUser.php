@@ -151,10 +151,17 @@ class LinUser extends Model
             throw new UserException();
         }
 
+        if (!$user->active) {
+            throw new UserException([
+                'msg' => '账户已被禁用，请联系管理员',
+                'error_code' => 20003
+            ]);
+        }
+
         if (!self::checkPassword($user->password, $password)) {
             throw new UserException([
                 'msg' => '密码错误，请重新输入',
-                'errorCode' => 20001
+                'error_code' => 20001
             ]);
         }
 
