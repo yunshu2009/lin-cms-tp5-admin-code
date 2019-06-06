@@ -86,4 +86,31 @@ class LinGroup extends Model
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function deleteGroupAuth($id)
+    {
+        $user = self::get($id,'auth');
+        $deleteGroup = $user->together('auth')->delete();
+        if(!$deleteGroup)
+        {
+            throw new GroupException([
+                'error_code' => 30005,
+                'msg' => '分组删除失败'
+            ]);
+        }
+        return $deleteGroup;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function auth()
+    {
+        return $this -> hasMany('LinAuth','group_id','id');
+    }
+
 }
