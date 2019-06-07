@@ -138,6 +138,19 @@ class LinUser extends Model
 
 
     /**
+     * @param $params [url,uid]
+     * @throws UserException
+     */
+    public static function updateUserAvatar($params){
+        $user = LinUser::find($params['uid']);
+        if (!$user) {
+            throw new UserException();
+        }
+        $user->avatar = $params['url'];
+        $user->save();
+    }
+
+    /**
      * @param $nickname
      * @param $password
      * @return array|\PDOStatement|string|\think\Model
