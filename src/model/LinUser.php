@@ -141,12 +141,12 @@ class LinUser extends Model
      * @param $params [url,uid]
      * @throws UserException
      */
-    public static function updateUserAvatar($params){
-        $user = LinUser::find($params['uid']);
+    public static function updateUserAvatar($uid,$url){
+        $user = LinUser::find($uid);
         if (!$user) {
             throw new UserException();
         }
-        $user->avatar = $params['url'];
+        $user->avatar = $url;
         $user->save();
     }
 
