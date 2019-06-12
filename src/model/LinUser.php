@@ -178,7 +178,7 @@ class LinUser extends Model
             ]);
         }
 
-        return $user;
+        return $user->hidden(['password']);
 
     }
 
