@@ -67,7 +67,6 @@ class LinGroup extends Model
             $group = (new LinGroup())->allowField(true)->create($params);
 
             $auths = [];
-            $params['auths'] = json_decode($params['auths']);
 
             foreach ($params['auths'] as $value) {
                 $auth = findAuthModule($value);
