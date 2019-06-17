@@ -37,8 +37,6 @@ class LinAuth extends Model
      */
     public static function dispatchAuths($params)
     {
-        $params['auths'] = json_decode($params['auths']);
-
         foreach ($params['auths'] as $value) {
             $auth = self::where(['group_id' => $params['group_id'], 'auth' => $value])->find();
             if (!$auth) {
