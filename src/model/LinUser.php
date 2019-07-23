@@ -45,6 +45,8 @@ class LinUser extends Model
             ]);
         }
         $params['password'] = md5($params['password']);
+        $params['admin'] = 1;
+        $params['active'] = 1;
         self::create($params);
     }
 
