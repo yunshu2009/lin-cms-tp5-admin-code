@@ -8,6 +8,7 @@
 
 namespace LinCmsTp5\admin\model;
 
+use think\facade\Config;
 use think\Model;
 use LinCmsTp5\admin\exception\user\UserException;
 use think\Exception;
@@ -214,6 +215,13 @@ class LinUser extends Model
     private static function checkPassword($md5Password, $password)
     {
         return $md5Password === md5($password);
+    }
+
+    function getAvatarAttr($value)
+    {
+        $host = Config::get('file.host') ?? "http://127.0.0.1:8000";
+        $storeDir = Config::get('file.store_dir');
+        return $host . '/' . $storeDir . '/' . $value;
     }
 
 }
