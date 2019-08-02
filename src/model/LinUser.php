@@ -144,7 +144,8 @@ class LinUser extends Model
      * @param $params [url,uid]
      * @throws UserException
      */
-    public static function updateUserAvatar($uid,$url){
+    public static function updateUserAvatar($uid, $url)
+    {
         $user = LinUser::find($uid);
         if (!$user) {
             throw new UserException();
@@ -219,9 +220,14 @@ class LinUser extends Model
 
     function getAvatarAttr($value)
     {
-        $host = Config::get('file.host') ?? "http://127.0.0.1:8000";
-        $storeDir = Config::get('file.store_dir');
-        return $host . '/' . $storeDir . '/' . $value;
+        $url = $value;
+        if ($value) {
+            $host = Config::get('file.host') ?? "http://127.0.0.1:8000";
+            $storeDir = Config::get('file.store_dir');
+            $url = $host . '/' . $storeDir . '/' . $value;
+        }
+
+        return $url;
     }
 
 }
