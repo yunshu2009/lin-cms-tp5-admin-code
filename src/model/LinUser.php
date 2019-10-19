@@ -84,6 +84,20 @@ class LinUser extends Model
         return $result;
     }
 
+    public static function changePassword($uid, $params)
+    {
+        $user = self::find($uid);
+        if (!self::checkPassword($user->password, $params['old_password'])) {
+            throw new UserException([
+                'msg' => '原始密码错误，请重新输入',
+                'error_code' => 20001
+            ]);
+        }
+
+        $user->password = md5($params['new_password']);
+        $user->save();
+    }
+
     /**
      * @param $params
      * @throws UserException
