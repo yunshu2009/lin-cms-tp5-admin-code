@@ -34,6 +34,7 @@ class LinUser extends Model
         $user = self::where('nickname', $params['nickname'])->find();
         if ($user) {
             throw new UserException([
+                'code' => 400,
                 'msg' => '用户名重复，请重新输入',
                 'error_code' => 10030
             ]);
@@ -41,6 +42,7 @@ class LinUser extends Model
         $user = self::where('email', $params['email'])->find();
         if ($user) {
             throw new UserException([
+                'code' => 400,
                 'msg' => '注册邮箱重复，请重新输入',
                 'error_code' => 10030
             ]);
@@ -65,6 +67,7 @@ class LinUser extends Model
                 ->find();
 
             if ($exists) throw  new UserException([
+                'code' => 400,
                 'msg' => '注册邮箱重复，请重新输入',
                 'error_code' => 10030
             ]);
@@ -113,6 +116,7 @@ class LinUser extends Model
         $user = self::find($uid);
         if (!self::checkPassword($user->password, $params['old_password'])) {
             throw new UserException([
+                'code' => 400,
                 'msg' => '原始密码错误，请重新输入',
                 'error_code' => 10030
             ]);
@@ -168,6 +172,7 @@ class LinUser extends Model
         $emailExist = self::where('email', $params['email'])->find();
         if ($emailExist && $params['email'] != $user['email']) {
             throw new UserException([
+                'code' => 400,
                 'msg' => '注册邮箱重复，请重新输入',
                 'error_code' => 10030
             ]);
@@ -208,6 +213,7 @@ class LinUser extends Model
 
         if (!$user->active) {
             throw new UserException([
+                'code' => 400,
                 'msg' => '账户已被禁用，请联系管理员',
                 'error_code' => 10070
             ]);
@@ -215,6 +221,7 @@ class LinUser extends Model
 
         if (!self::checkPassword($user->password, $password)) {
             throw new UserException([
+                'code' => 400,
                 'msg' => '密码错误，请重新输入',
                 'error_code' => 10030
             ]);
