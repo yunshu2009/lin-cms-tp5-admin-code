@@ -50,8 +50,8 @@ class LinLog extends Model
         $result = [
             'items' => $logs,
             'total' => $totalNums,
-            'count' => Request::get('count'),
-            'page' => Request::get('page'),
+            'count' => Request::get('count/d'),
+            'page' => Request::get('page/d'),
             'total_page' => ceil($totalNums / Request::get('count'))
         ];
         return $result;
