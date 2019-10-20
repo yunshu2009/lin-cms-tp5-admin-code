@@ -35,14 +35,14 @@ class LinUser extends Model
         if ($user) {
             throw new UserException([
                 'msg' => '用户名重复，请重新输入',
-                'error_code' => 20004
+                'error_code' => 10030
             ]);
         }
         $user = self::where('email', $params['email'])->find();
         if ($user) {
             throw new UserException([
                 'msg' => '注册邮箱重复，请重新输入',
-                'error_code' => 20004
+                'error_code' => 10030
             ]);
         }
         $params['password'] = md5($params['password']);
@@ -66,7 +66,7 @@ class LinUser extends Model
 
             if ($exists) throw  new UserException([
                 'msg' => '注册邮箱重复，请重新输入',
-                'error_code' => 20004
+                'error_code' => 10030
             ]);
         }
         $user->save($params);
@@ -114,7 +114,7 @@ class LinUser extends Model
         if (!self::checkPassword($user->password, $params['old_password'])) {
             throw new UserException([
                 'msg' => '原始密码错误，请重新输入',
-                'error_code' => 20001
+                'error_code' => 10030
             ]);
         }
 
@@ -169,7 +169,7 @@ class LinUser extends Model
         if ($emailExist && $params['email'] != $user['email']) {
             throw new UserException([
                 'msg' => '注册邮箱重复，请重新输入',
-                'error_code' => 20004
+                'error_code' => 10030
             ]);
         }
 
@@ -216,7 +216,7 @@ class LinUser extends Model
         if (!self::checkPassword($user->password, $password)) {
             throw new UserException([
                 'msg' => '密码错误，请重新输入',
-                'error_code' => 20001
+                'error_code' => 10030
             ]);
         }
 
