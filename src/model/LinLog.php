@@ -45,8 +45,6 @@ class LinLog extends Model
         $totalNums = $logs->count();
         $logs = $logs->limit($start, $count)->select();
 
-//        if (!count($logs)) throw new LoggerException(['code' => 404, 'msg' => '没有查询到更多日志']);
-
         $result = [
             'items' => $logs,
             'total' => $totalNums,
