@@ -52,6 +52,24 @@ class LinUser extends Model
     }
 
     /**
+     * @param $uid
+     * @param $params
+     * @throws UserException
+     */
+    public static function updateUserInfo($uid, $params)
+    {
+        if (isset($params['email'])) {
+            $exists = self::where('email', $params['email'])->field('email')->find();
+            if ($exists) throw  new UserException([
+                'msg' => '注册邮箱重复，请重新输入',
+                'error_code' => 20004
+            ]);
+        }
+        $params['id'] = $uid;
+        self::field(true)->save($params);
+    }
+
+    /**
      * @param $params
      * @return array
      * @throws \think\exception\DbException
