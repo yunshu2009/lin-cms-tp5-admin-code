@@ -10,6 +10,7 @@ namespace LinCmsTp5\admin\model;
 
 use LinCmsTp5\admin\exception\logger\LoggerException;
 use think\Model;
+use think\facade\Request;
 
 class LinLog extends Model
 {
@@ -47,8 +48,11 @@ class LinLog extends Model
         if (!count($logs)) throw new LoggerException(['code' => 404, 'msg' => '没有查询到更多日志']);
 
         $result = [
-            'collection' => $logs,
-            'total_nums' => $totalNums
+            'items' => $logs,
+            'total' => $totalNums,
+            'count' => Request::get('count'),
+            'page' => Request::get('page'),
+            'total_page' => ceil($totalNums / Request::get('count'))
         ];
         return $result;
 

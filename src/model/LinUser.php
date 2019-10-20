@@ -98,8 +98,11 @@ class LinUser extends Model
         }, $userList->toArray());
 
         $result = [
-            'collection' => $userList,
-            'total_nums' => $totalNums
+            'items' => $userList,
+            'total' => $totalNums,
+            'count' => Request::get('count'),
+            'page' => Request::get('page'),
+            'total_page' => ceil($totalNums / Request::get('count'))
         ];
 
         return $result;
