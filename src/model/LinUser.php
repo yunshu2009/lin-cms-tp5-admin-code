@@ -58,15 +58,18 @@ class LinUser extends Model
      */
     public static function updateUserInfo($uid, $params)
     {
-        if (isset($params['email'])) {
-            $exists = self::where('email', $params['email'])->field('email')->find();
+        $user = self::find($uid);
+        if (isset($params['email']) && $user['email'] != $params['email']) {
+            $exists = self::where('email', $params['email'])
+                ->field('email')
+                ->find();
+
             if ($exists) throw  new UserException([
                 'msg' => '注册邮箱重复，请重新输入',
                 'error_code' => 20004
             ]);
         }
-        $params['id'] = $uid;
-        self::field(true)->save($params);
+        $user->save($params);
     }
 
     /**
@@ -187,15 +190,15 @@ class LinUser extends Model
     }
 
     /**
-     * @param $nickname
+     * @param $username
      * @param $password
      * @return array|\PDOStatement|string|\think\Model
      * @throws UserException
      */
-    public static function verify($nickname, $password)
+    public static function verify($username, $password)
     {
         try {
-            $user = self::where('nickname', $nickname)->findOrFail();
+            $user = self::where('username', $username)->findOrFail();
         } catch (Exception $ex) {
             throw new UserException();
         }
