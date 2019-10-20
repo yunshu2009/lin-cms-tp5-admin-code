@@ -209,7 +209,7 @@ class LinUser extends Model
         if (!$user->active) {
             throw new UserException([
                 'msg' => '账户已被禁用，请联系管理员',
-                'error_code' => 20003
+                'error_code' => 10070
             ]);
         }
 
