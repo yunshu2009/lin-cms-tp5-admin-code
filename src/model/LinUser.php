@@ -9,7 +9,7 @@
 namespace LinCmsTp5\admin\model;
 
 use think\facade\Config;
-use think\facade\Reuqest;
+use think\facade\Request;
 use think\Model;
 use LinCmsTp5\admin\exception\user\UserException;
 use think\Exception;
