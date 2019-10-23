@@ -32,7 +32,7 @@ class LinUser extends Model
      */
     public static function createUser($params)
     {
-        $user = self::where('nickname', $params['nickname'])->find();
+        $user = self::where('username', $params['username'])->find();
         if ($user) {
             throw new UserException([
                 'code' => 400,
