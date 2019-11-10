@@ -84,7 +84,9 @@ class LinUser extends Model
     public static function getAdminUsers($params)
     {
         $group = [];
-        if (array_key_exists('group_id', $params)) $group = ['group_id' => $params['group_id']];
+        if (array_key_exists('group_id', $params)) {
+            $group = ['group_id' => $params['group_id']];
+        }
 
         list($start, $count) = paginate();
 
@@ -104,9 +106,9 @@ class LinUser extends Model
         $result = [
             'items' => $userList,
             'total' => $totalNums,
-            'count' => Request::get('count/d'),
+            'count' => $count,
             'page' => Request::get('page/d'),
-            'total_page' => ceil($totalNums / Request::get('count'))
+            'total_page' => ceil($totalNums / $count)
         ];
 
         return $result;
